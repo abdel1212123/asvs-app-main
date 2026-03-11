@@ -1,0 +1,75 @@
+<div class="app-shell">
+
+  <!-- TOP HEADER BAR -->
+  <header class="app-header">
+    <div class="header-left">
+      <!-- Animated shield logo -->
+      <div class="logo-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      </div>
+      <div class="header-title-wrap">
+        <span class="header-tag mono">OWASP // ASVS</span>
+        <h1 class="header-title">Security Command Center</h1>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span class="mono text-xs">SYSTEM ACTIVE</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <span class="level-label mono">TARGET LEVEL</span>
+      <div class="level-selector-wrap">
+        <select [(ngModel)]="currentLevel" class="level-select mono">
+          <option [ngValue]="1">L1 — Basic</option>
+          <option [ngValue]="2">L2 — Standard</option>
+          <option [ngValue]="3">L3 — Advanced</option>
+        </select>
+        <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCORE BAR BELOW HEADER -->
+  <div class="score-bar-wrap">
+    <app-score-dashboard></app-score-dashboard>
+  </div>
+
+  <!-- MAIN 3-COLUMN LAYOUT -->
+  <div class="main-grid">
+
+    <!-- LEFT SIDEBAR: Categories -->
+    <aside class="sidebar-col">
+      <app-category-list (categorySelected)="onCategorySelected($event)"></app-category-list>
+    </aside>
+
+    <!-- CENTER: Checklist -->
+    <main class="center-col">
+      <app-checklist-view [categoryName]="selectedCategoryName" [currentLevel]="currentLevel"></app-checklist-view>
+    </main>
+
+    <!-- RIGHT: AI Panel -->
+    <aside class="ai-col">
+      <app-ai-recommendations [currentLevel]="currentLevel"></app-ai-recommendations>
+    </aside>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <span class="mono text-xs" style="color: var(--text-secondary);">
+      OWASP Application Security Verification Standard &nbsp;|&nbsp; 
+      <span style="color: var(--neon-cyan);">v4.0</span> &nbsp;|&nbsp;
+      Security Compliance Tracker
+    </span>
+  </footer>
+
+</div>

@@ -1,0 +1,47 @@
+<div class="cat-panel">
+
+  <!-- Panel header -->
+  <div class="cat-header">
+    <div class="cat-header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+      </svg>
+    </div>
+    <div>
+      <div class="cat-header-tag mono">SECURITY</div>
+      <div class="cat-header-title">Categories</div>
+    </div>
+    <span class="cat-count-badge mono">{{ categories.length }}</span>
+  </div>
+
+  <!-- Category list -->
+  <div class="cat-list-wrap">
+    <ul class="cat-list">
+      <li *ngFor="let category of categories; let i = index"
+          class="cat-item"
+          [class.cat-active]="selectedCategoryName === category.name"
+          (click)="selectCategory(category.name)">
+
+        <!-- Number index -->
+        <span class="cat-index mono">{{ i + 1 | number:'2.0-0' }}</span>
+
+        <!-- Name -->
+        <span class="cat-name" [title]="category.name">{{ category.name }}</span>
+
+        <!-- Progress mini bar + count -->
+        <div class="cat-progress-wrap">
+          <div class="cat-mini-bar">
+            <div class="cat-mini-fill"
+              [style.width.%]="category.items.length ? (getCompletedCount(category) / category.items.length * 100) : 0">
+            </div>
+          </div>
+          <span class="cat-badge mono">
+            {{ getCompletedCount(category) }}/{{ category.items.length }}
+          </span>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+</div>

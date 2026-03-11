@@ -1,0 +1,77 @@
+<div class="checklist-panel">
+
+  <!-- Panel header -->
+  <div class="checklist-header">
+    <div class="checklist-header-left">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <div class="checklist-header-tag mono">CONTROLS</div>
+        <div class="checklist-header-title">{{ categoryName || 'Select a Category' }}</div>
+      </div>
+    </div>
+    <div *ngIf="categoryName" class="checklist-level-badge mono">
+      LVL {{ currentLevel }}
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="checklist-body">
+
+    <!-- Empty state: no category -->
+    <div *ngIf="!categoryName" class="checklist-empty">
+      <div class="empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div class="empty-title mono">NO CATEGORY SELECTED</div>
+      <div class="empty-sub">Choose a security domain from the sidebar to view controls</div>
+    </div>
+
+    <!-- Empty: no items for level -->
+    <div *ngIf="categoryName && itemsToDisplay.length === 0" class="checklist-empty">
+      <div class="empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+        </svg>
+      </div>
+      <div class="empty-title mono">NO CONTROLS</div>
+      <div class="empty-sub">No requirements for Level {{ currentLevel }} in this category</div>
+    </div>
+
+    <!-- Control items -->
+    <div *ngIf="categoryName && itemsToDisplay.length > 0" class="control-list">
+      <div *ngFor="let item of itemsToDisplay"
+           class="control-card"
+           [class.control-done]="item.selected"
+           (click)="toggleItem(item)">
+
+        <!-- Checkbox area -->
+        <div class="control-check" [class.check-done]="item.selected">
+          <svg *ngIf="item.selected" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+          </svg>
+          <svg *ngIf="!item.selected" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+
+        <!-- Content -->
+        <div class="control-content">
+          <div class="control-meta">
+            <span class="control-id mono">{{ item.id }}</span>
+            <span class="control-status mono" [class.status-done]="item.selected" [class.status-pending]="!item.selected">
+              {{ item.selected ? '✓ IMPLEMENTED' : '○ PENDING' }}
+            </span>
+            <span *ngIf="item.cwe" class="control-cwe mono">CWE-{{ item.cwe }}</span>
+          </div>
+          <p class="control-desc">{{ item.description }}</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

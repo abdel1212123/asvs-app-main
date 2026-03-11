@@ -1,0 +1,71 @@
+<div class="score-dashboard">
+
+  <!-- LEFT: Status label -->
+  <div class="score-label-block">
+    <span class="score-tag mono">// COMPLIANCE SCORE</span>
+    <div class="score-title">Security Posture</div>
+    <div class="score-sub">OWASP ASVS — Real-time tracking</div>
+  </div>
+
+  <!-- CENTER: Progress rail -->
+  <div class="score-rail-block">
+    <div class="score-rail-header">
+      <span class="mono" style="font-size:11px; color: var(--text-muted);">0%</span>
+      <span class="mono" style="font-size:11px; color: var(--neon-cyan);">{{ score.percentage }}% COMPLETE</span>
+      <span class="mono" style="font-size:11px; color: var(--text-muted);">100%</span>
+    </div>
+    <div class="score-rail">
+      <div class="score-rail-fill" [style.width.%]="score.percentage">
+        <div class="score-rail-glow"></div>
+      </div>
+    </div>
+    <div class="score-stats-row">
+      <div class="stat-chip">
+        <span class="stat-num neon-green">{{ score.implemented }}</span>
+        <span class="stat-label mono">IMPLEMENTED</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-chip">
+        <span class="stat-num" style="color: #f59e0b;">{{ score.total - score.implemented }}</span>
+        <span class="stat-label mono">PENDING</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-chip">
+        <span class="stat-num" style="color: var(--neon-cyan);">{{ score.total }}</span>
+        <span class="stat-label mono">TOTAL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Radial ring -->
+  <div class="score-ring-block">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <!-- Background track -->
+        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,245,255,0.08)" stroke-width="8"/>
+        <!-- Glow circle -->
+        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,245,255,0.04)" stroke-width="14"/>
+        <!-- Progress arc -->
+        <circle cx="60" cy="60" r="50" fill="none"
+          stroke="url(#ringGrad)"
+          stroke-width="8"
+          stroke-linecap="round"
+          stroke-dasharray="314"
+          [attr.stroke-dashoffset]="314 - (314 * score.percentage / 100)"
+          transform="rotate(-90 60 60)"
+          style="transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1)"/>
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00f5ff"/>
+            <stop offset="100%" stop-color="#bf5af2"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="ring-center">
+        <span class="ring-pct mono">{{ score.percentage }}</span>
+        <span class="ring-pct-sym mono">%</span>
+      </div>
+    </div>
+  </div>
+
+</div>
